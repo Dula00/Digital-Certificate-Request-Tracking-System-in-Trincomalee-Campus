@@ -3,7 +3,7 @@
 ## 📌 Project Description
 This project is a web-based system developed to manage and track digital certificate requests in the Trincomalee Campus.
 
-![Project Screenshot](image_be4382.jpg)
+![Project Screenshot]([image_be4382.jpg](https://github.com/Dula00/Digital-Certificate-Request-Tracking-System-in-Trincomalee-Campus/blob/main/Screenshot%202026-05-14%20102436.png?raw=true)
 
 ## 🛠️ Technologies Used
 - HTML
