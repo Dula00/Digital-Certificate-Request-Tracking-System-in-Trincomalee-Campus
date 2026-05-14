@@ -15,8 +15,12 @@ This project is a web-based system developed to manage and track digital certifi
 ## 🚀 Features
 - User login system
 - Student request submission
+- Staff dashboard
+- AR dashboard
 - Admin dashboard
 - Request tracking system
+- Notification System
+- Security & Access Control
 
 ## 📂 Project Structure
 - frontend files (HTML, CSS, JS)
