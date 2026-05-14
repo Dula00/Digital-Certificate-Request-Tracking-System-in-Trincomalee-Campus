@@ -58,14 +58,14 @@ db.getConnection((err, connection) => {
 
 
 
-// --- 4. Authentication (Login) with Email Notification ---
+//  4. Authentication (Login) with Email Notification 
 app.post('/api/login', (req, res) => {
     const { username, password, role } = req.body; 
 
     console.log(`Login attempt for user: ${username} with role: ${role}`);
     
-    // Email එකත් එක්කම User විස්තර 
-    // ✅ මේ query එකේ dashboard එකට අවශ්‍ය සියලුම fields අඩංගුයි
+    // User Email details 
+    // This query has all dashboard fields
 const query = 'SELECT id, full_name, registration_number, index_number, role, program, academic_year, email, department FROM users WHERE registration_number = ? AND password = ? AND role = ?';
     
     db.execute(query, [username, password, role], (err, results) => {
@@ -75,12 +75,12 @@ const query = 'SELECT id, full_name, registration_number, index_number, role, pr
             const user = results[0];
             const userEmail = user.email;
 
-            // 📱 Device විස්තර වඩාත් පැහැදිලිව ලබාගැනීම
+            // To get clearer details about the device.
             const agent = useragent.parse(req.headers['user-agent']);
-            const deviceDetails = `${agent.os.toString()} | ${agent.toAgent()}`; // උදා: Windows 10 | Chrome 124
+            const deviceDetails = `${agent.os.toString()} | ${agent.toAgent()}`; // EX: Windows 10 | Chrome 124
             const loginTime = new Date().toLocaleString('en-GB', { timeZone: 'Asia/Colombo' });
 
-            // 📩 Email එක යැවීමේ Configuration (ඔයාගේ පරණ Gmail settings මයි)
+            // Sent Email Configuration 
             const transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
@@ -115,13 +115,13 @@ const query = 'SELECT id, full_name, registration_number, index_number, role, pr
                 `
             };
 
-            // Email එක යවන අතරතුර Login එක පමා නොකර Frontend එකට Response එක යවනවා
+            // While sending the email, a response is returned to the frontend without delaying the login process.
             transporter.sendMail(mailOptions, (mailErr, info) => {
                 if (mailErr) console.error("❌ Login Email Error:", mailErr);
                 else console.log(`✅ Security alert sent to: ${userEmail}`);
             });
 
-            // ශිෂ්‍යයා හෝ නිලධාරියා Dashboard එකට ඇතුළු කිරීම
+            // log to student or staff Dashboard 
             res.json({ success: true, user: user });
 
         } else {
@@ -133,34 +133,34 @@ const query = 'SELECT id, full_name, registration_number, index_number, role, pr
 
 // --- 5. Submit Request API (Updated Fix for Semester) ---
 app.post('/api/submit-request', upload.single('document'), (req, res) => {
-    // Frontend එකෙන් එවන දත්ත අතරට semester_details එකතු කළා
+    // Added semester_details to the data sent from the frontend.
     const { student_id, student_name, reg_number, certType, speed, semester_details } = req.body;
     
-    // File එකේ නම (තිබේ නම්)
+    // File name (If have)
     const fileName = req.file ? req.file.filename : null;
 
-    // 🔴 මෙතන INSERT Query එකේ semester_details column එක අනිවාර්යයෙන් තිබිය යුතුයි
+    // Must INSERT Query have semester_details column 
     const sqlRequest = `INSERT INTO requests 
         (student_id, student_name, reg_number, certificate_type, speed, semester_details, document_path, status) 
         VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending')`;
 
-    // අගයන් 7ක් තියෙන නිසා මෙතන array එකේ අගයන් 7ක් තියෙන්න ඕනේ
+    // The array must contain 7 elements because there are 7 values.
     db.execute(sqlRequest, [student_id, student_name, reg_number, certType, speed, semester_details, fileName], (err, result) => {
         if (err) {
-            console.error("❌ SQL Insert Error:", err);
+            console.error(" SQL Insert Error:", err);
             return res.status(500).json({ success: false, message: err.message });
         }
         
         const requestId = result.insertId;
         const notifications = [
-            [student_id, 'student', 'Request Submitted! 🚀', `Your request for "${certType}" (#REQ-${requestId}) is pending.`],
+            [student_id, 'student', 'Request Submitted! ', `Your request for "${certType}" (#REQ-${requestId}) is pending.`],
             ['STAFF_GROUP', 'staff', 'New Request Received', `Student ${student_name} requested ${certType}.`],
             ['AR_GROUP', 'registrar', 'Action Required', `New request #REQ-${requestId} needs review.`]
         ];
 
         const sqlNotify = "INSERT INTO notifications (user_id, role, title, message) VALUES ?";
         db.query(sqlNotify, [notifications], (err) => {
-            if (err) console.error("❌ Notification Error:", err);
+            if (err) console.error(" Notification Error:", err);
         });
 
         res.json({ success: true, requestId: requestId });
@@ -175,13 +175,13 @@ app.post('/api/auth/forgot-password', async (req, res) => {
         return res.status(400).json({ success: false, message: "Email is required" });
     }
 
-    // 1. අංක 6ක OTP එකක් හදනවා
+    // 1. Make the OTP six numbers
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     
-    // 2. OTP එක විනාඩි 15කින් Expire වෙන්න හදනවා
+    // 2.Expire to 15 Minute OTP 
     const expiryTime = new Date(Date.now() + 15 * 60000); 
 
-    // 3. Database එක Update කරනවා (ඔයාගේ table එක users නම්)
+    // 3. Database  Update (If Your table users)
     const updateSql = "UPDATE users SET reset_otp = ?, otp_expiry = ? WHERE email = ?";
     
     db.execute(updateSql, [otp, expiryTime, email], async (err, result) => {
@@ -191,12 +191,12 @@ app.post('/api/auth/forgot-password', async (req, res) => {
             return res.status(404).json({ success: false, message: "Email not found" });
         }
 
-        // 4. Email එක යැවීමේ සැකසුම (Nodemailer)
+        // 4. Make the sent Email (Nodemailer)
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
                 user: 'tceusldigitalcertificate@gmail.com',
-                pass: 'gujw qqqi eayo fylv' // නිකන් password නෙමෙයි
+                pass: 'gujw qqqi eayo fylv' 
             }
         });
 
@@ -224,7 +224,7 @@ app.post('/api/auth/forgot-password', async (req, res) => {
 app.post('/api/auth/reset-password', (req, res) => {
     const { email, otp, newPassword } = req.body;
 
-    // 1. OTP එක හරිද සහ කාලය ඉකුත් වී නැතිද (Expiry) කියා බලනවා
+    // 1. Checking whether the OTP is correct and has not expired
     const checkSql = "SELECT * FROM users WHERE email = ? AND reset_otp = ? AND otp_expiry > NOW()";
     
     db.execute(checkSql, [email, otp], (err, results) => {
@@ -233,7 +233,7 @@ app.post('/api/auth/reset-password', (req, res) => {
             return res.status(400).json({ success: false, message: "Invalid or expired OTP!" });
         }
 
-        // 2. OTP එක හරි නම්, අලුත් Password එක Update කරනවා
+        // 2. If the OTP is correct, the password is updated.
         const updateSql = "UPDATE users SET password = ?, reset_otp = NULL, otp_expiry = NULL WHERE email = ?";
         db.execute(updateSql, [newPassword, email], (err2) => {
             if (err2) return res.status(500).json({ success: false, message: "Failed to update password" });
@@ -242,12 +242,12 @@ app.post('/api/auth/reset-password', (req, res) => {
     });
 });
 
-// --- 6. Certificate Download & View Logic ---
+//  6. Certificate Download & View Logic 
 
-// ශිෂ්‍යයාට නිකුත් කළ (Issued/Approved) සහතික ලැයිස්තුව
+// List of certificates issued/approved for the student.
 app.get('/api/student/issued-certificates/:id', (req, res) => {
     const studentId = req.params.id;
-    // මෙතනදී 'requests' table එකේ status='Approved' ඒවා ගන්නවා
+    // this take the'requests' table status='Approved' 
     const query = `SELECT id, certificate_type, submitted_date as updated_at, document_path as file_name 
                    FROM requests WHERE student_id = ? AND status = 'Approved'`;
 
@@ -257,7 +257,7 @@ app.get('/api/student/issued-certificates/:id', (req, res) => {
     });
 });
 
-// සහතිකය Download කිරීමට
+
 app.get('/api/download/:filename', (req, res) => {
     const fileName = req.params.filename;
     const filePath = path.join(__dirname, 'uploads', fileName);
@@ -270,7 +270,7 @@ app.get('/api/download/:filename', (req, res) => {
     });
 });
 
-// --- 7. Other Essential APIs ---
+//   Other Essential APIs 
 
 app.get('/api/dashboard-stats', (req, res) => {
     const studentId = req.query.studentId; 
@@ -285,11 +285,11 @@ app.get('/api/dashboard-stats', (req, res) => {
     });
 });
 
-// --- මේක ඔයාගේ Backend එකේ අඩුවෙන API එක ---
+
 app.get('/api/my-requests', (req, res) => {
     const studentId = req.query.studentId; 
 
-    // මේ Query එකෙන් වෙන්නේ අදාළ ශිෂ්‍යයාගේ සියලුම Requests ටික අලුත්ම එක උඩට එන විදිහට (DESC) දත්ත ගන්න එකයි
+    // Fetch student requests in descending order (latest first) (DESC) 
     const sql = "SELECT id, certificate_type, submitted_date, status FROM requests WHERE student_id = ? ORDER BY id DESC";
 
     db.execute(sql, [studentId], (err, results) => {
@@ -297,7 +297,7 @@ app.get('/api/my-requests', (req, res) => {
             console.error("❌ My Requests DB Error:", err);
             return res.status(500).json({ success: false, message: "Database error" });
         }
-        res.json(results); // Frontend එකට දත්ත ටික යවනවා
+        res.json(results); 
     });
 });
 
@@ -305,7 +305,7 @@ app.get('/api/notifications', (req, res) => {
     const { userId } = req.query;
     const { role } = 'student';
 
-    // 👇 මේක දැම්මම තමයි Terminal එකේ Request එකක් ආවා කියලා පේන්නේ
+    // When this is added, it shows in the terminal that a request has been received.
     console.log(`🔔 Notification request received for User ID: ${userId}`);
 
     const sql = "SELECT * FROM notifications WHERE user_id = ? ORDER BY created_at DESC";
@@ -332,7 +332,7 @@ app.get('/api/track/:id', (req, res) => {
     });
 });
 
-// --- Staff Dashboard එකට Pending Requests ලබා දෙන API එක ---
+// Create API to fetch pending requests for staff dashboard
 app.get('/api/staff/requests', (req, res) => {
     // Database එකෙන් Pending status තියෙන ඔක්කොම දත්ත ගන්නවා
     const sql = "SELECT * FROM requests WHERE status = 'Pending' ORDER BY submitted_date DESC";
@@ -348,9 +348,9 @@ app.get('/api/staff/requests', (req, res) => {
     });
 });
 
-// ==========================================
-// 8. Staff Action APIs (View Details & Update Status)
-// ==========================================
+
+// 8 Staff Action APIs (View Details & Update Status)
+
 
 // --- 8.1. Modal එකට අදාළ Request එකේ විස්තර ගැනීම ---
 app.get('/api/staff/request-details/:id', (req, res) => {
@@ -378,10 +378,10 @@ app.get('/api/staff/request-details/:id', (req, res) => {
     });
 });
 
-// --- 8.2. Multi-level Approval Logic (Updated) ---
-// --- Staff එකෙන් Forward කරන්න Call කරන API එක ---
+//  8.2. Multi-level Approval Logic (Updated) 
+//  Staff එකෙන් Forward කරන්න Call කරන API එක 
 app.put('/api/staff/update-status/:id', (req, res) => {
-    const requestId = req.params.id; // URL එකෙන් ID එක ගන්නවා
+    const requestId = req.params.id;  // URL එකෙන් ID එක ගන්නවා
     const { status } = req.body;      // Body එකෙන් status එක ගන්නවා
 
     // Database එක update කරන query එක
@@ -402,7 +402,7 @@ app.put('/api/staff/update-status/:id', (req, res) => {
     });
 });
 
-// --- 8.3. එක් එක් නිලධාරියා (Authority) අනුව Status එක Update කිරීම ---
+//  8.3. එක් එක් නිලධාරියා (Authority) අනුව Status එක Update කිරීම 
 // Multi-level Approval Update Route
 app.post('/api/update-authority-status', (req, res) => {
     const { requestId, authority, status } = req.body;
@@ -482,8 +482,6 @@ app.get('/api/verify/:studentId', (req, res) => {
     });
 });
 
-
-
 app.get('/api/registrar/request-details/:id', (req, res) => {
     const id = req.params.id;
     const sql = "SELECT student_name, reg_number, certificate_type, submitted_date FROM requests WHERE id = ?";
@@ -503,7 +501,7 @@ app.get('/api/registrar/request-details/:id', (req, res) => {
 app.post('/api/chatbot/ask', (req, res) => {
     const userQuery = req.body.query ? req.body.query.toLowerCase() : "";
 
-    // 1. අද දින දත්ත (Today's Summary)
+    // 1. Today's Summary
     if (userQuery.includes("today") || userQuery.includes("summary")) {
         db.query("SELECT COUNT(*) as total FROM requests WHERE DATE(submitted_date) = CURDATE()", (err, result) => {
             if (err) return res.json({ reply: "Database error." });
@@ -522,13 +520,13 @@ app.post('/api/chatbot/ask', (req, res) => {
         });
     }
 
-    // 3. Registration Number එක සෙවීම (දැන් මෙය හරිම ලේසියි)
+    // 3. Registration Number එක සෙවීම 
     else if (userQuery.includes("/") || /\d+/.test(userQuery)) {
         // වාක්‍යය ඇතුළත ඇති අංක/අකුරු කොටස (EUSL/TC/IS/2022/MS/08) වෙන් කරගන්නා සරල ක්‍රමය
         const match = userQuery.match(/[a-z0-9\/]+/gi);
         let regNo = match ? match.reduce((a, b) => a.length > b.length ? a : b) : "";
 
-        // 🔴 වැදගත්: '=' වෙනුවට 'LIKE' සහ '%' පාවිච්චි කිරීම
+        //  වැදගත්: '=' වෙනුවට 'LIKE' සහ '%' පාවිච්චි කිරීම
         const sql = "SELECT status, reg_number FROM requests WHERE reg_number LIKE ?";
         db.query(sql, [`%${regNo}%`], (err, result) => {
             if (err || result.length === 0) {
