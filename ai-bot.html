@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EUSL - Trincomalee Campus Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="ai-bot.css">
+</head>
+<body>
+
+
+<div id="eusl-ai-trigger" onclick="toggleSmartAI()">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" alt="AI" id="ai-logo">
+    <span class="ai-label">Ask EUSL AI</span>
+</div>
+
+<div id="eusl-ai-container" class="ai-closed">
+    <div class="ai-header">
+        <div class="ai-info">
+            <div class="ai-dot"></div>
+            <span>EUSL Smart Assistant</span>
+        </div>
+        <button onclick="toggleSmartAI()" class="close-ai">&times;</button>
+    </div>
+    
+    <div class="ai-body" id="ai-chat-flow">
+        <div class="ai-msg bot">Hello! I am your EUSL Assistant. How can I help you with the clearance process today?</div>
+    </div>
+
+    <div class="ai-footer">
+        <input type="text" id="ai-queries" placeholder="Type your question...">
+        <button type="button" title="Send message" onclick="processAIQuery()"><i class="fas fa-paper-plane"></i></button>
+    </div>
+</div>
+<script src="ai-bot script.js"></script>
+</body>
+</html>

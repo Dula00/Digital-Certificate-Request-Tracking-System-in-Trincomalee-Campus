@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCEUSL - Trincomalee Campus Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="ar-style.css">
+</head>
+<body>
+
+<div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="login.html" style="text-decoration: none;">
+                <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div></a>
+                <div class="logo-text">
+                    <h2>TCEUSL</h2>
+                    <p>AR Portal</p>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+			
+                <a href="javascript:void(0)" class="nav-item active" onclick="showSection('Review-Requests', this)">
+                  <i class="fas fa-home"></i> Review Requests</a>
+				  
+				   <a href="javascript:void(0)" class="nav-item" onclick="showSection('New Requests', this)">
+                   <i class="fas fa-folder-open"></i> New Requests</a>
+				
+                <a href="javascript:void(0)" class="nav-item" onclick="showSection('Forwarded-History', this)">
+                   <i class="fas fa-history"></i> Forwarded History</a>
+				
+                <a href="javascript:void(0)" class="nav-item" onclick="showSection('Reports', this)">
+                  <i class="fas fa-file-invoice"></i>Reports </a>
+				  
+				<a href="javascript:void(0)" class="nav-item" onclick="showSection('Chatbot-Control', this)">
+                  <i class="fas fa-robot"></i>Chatbot Control </a>
+		 </nav>
+
+            <div class="logout-section">
+            <a href="javascript:void(0)" class="nav-item logout-btn" onclick="logoutUser()">
+               <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+			
+        </aside>
+		
+	<main class="main-content">
+	    <div id="review-requests-section" class="content-section active-section">
+          <header class="top-bar">
+            <div class="welcome">
+                <h1>Assistant Registrar Dashboard</h1>
+                <p>Verify and forward clearance requests to Main Campus</p>
+            </div>  
+          </header>
+		  
+      <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon orange"><i class="fas fa-inbox"></i></div>
+                <div class="stat-details">
+                    <h3>New Requests</h3>
+                    <p>42</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green"><i class="fas fa-check-double"></i></div>
+                <div class="stat-details">
+                    <h3>Ready to Forward</h3>
+                    <p>18</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon blue"><i class="fas fa-hourglass-half"></i></div>
+                <div class="stat-details">
+                    <h3>Pending Dept.</h3>
+                    <p>24</p>
+                </div>
+            </div>
+        </section>
+
+
+   <section class="table-container">
+    <div class="table-header">
+        <h3>Clearance Status Review (Level 1)</h3>
+        <div class="header-actions">
+            <button class="btn-secondary"><i class="fas fa-file-export"></i> Export Report</button>
+            <button class="btn-primary" onclick="forwardAll()"><i class="fas fa-check-all"></i> Forward All Cleared</button>
+        </div>
+    </div>
+
+    <div class="table-controls">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="studentSearch" placeholder="Search by Index No or Name..." onkeyup="filterTable()">
+        </div>
+        <selection class="filter-select">
+            <option value="all">All Departments</option>
+            <option value="is">Information System</option>
+            <option value="ms">Management Studies</option>
+        </select>
+    </div>
+
+    <table class="data-table" id="clearanceTable">
+        <thead>
+            <tr>
+                <th>Index No</th>
+                <th>Student Name</th>
+                <th>Library</th>
+                <th>Hostel</th>
+                <th>Dept.</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2020/MS/001</td>
+                <td>Kamal Perera</td>
+                <td><span class="c-badge done">Cleared</span></td>
+                <td><span class="c-badge done">Cleared</span></td>
+                <td><span class="c-badge done">Cleared</span></td>
+                <td>
+                    <button class="btn-forward" onclick="forwardToMain('2020/MS/001')">
+                        <i class="fas fa-paper-plane"></i> Forward to EUSL
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>2020/MS/106</td>
+                <td>Nimal Silva</td>
+                <td><span class="c-badge done">Cleared</span></td>
+                <td><span class="c-badge pending">Pending</span></td>
+                <td><span class="c-badge done">Cleared</span></td>
+                <td>
+                    <button class="btn-disabled" title="Waiting for Hostel clearance" disabled>Pending Review</button>
+                </td>
+            </tr>
+			  <tr>
+                <td>2020/MS/106</td>
+                <td>Nimal Silva</td>
+                <td><span class="c-badge done">Cleared</span></td>
+                <td><span class="c-badge pending">Pending</span></td>
+                <td><span class="c-badge done">Cleared</span></td>
+                <td>
+                    <button class="btn-disabled" title="Waiting for Hostel clearance" disabled>Pending Review</button>
+                </td>
+            </tr>
+			<tr>
+                <td>2020/MS/001</td>
+                <td>Kamal Perera</td>
+                <td><span class="c-badge done">Cleared</span></td>
+                <td><span class="c-badge done">Cleared</span></td>
+                <td><span class="c-badge done">Cleared</span></td>
+                <td>
+                    <button class="btn-forward" onclick="forwardToMain('2020/MS/001')">
+                        <i class="fas fa-paper-plane"></i> Forward to EUSL
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+</div>
+
+<div id="new-requests-section" class="content-section" style="display: none;">
+        <header class="top-bar">
+            <div class="welcome">
+                <h1>New Incoming Requests</h1>
+                <p>Verify documents for new applications</p>
+            </div>
+        </header>
+
+        <div class="dashboard-content">
+            <div class="table-container">
+                <table class="ar-request-table">
+                    <thead>
+                        <tr>
+                            <th>Student Reg. No.</th>
+                            <th>Request Type</th>
+                            <th>Date Received</th>
+                            <th>Clearance</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="requestList">
+                        <tr>
+                            <td>2020/ICT/45</td>
+                            <td><b>Degree Certificate</b></td>
+                            <td>2025-03-10</td>
+                            <td>
+                                <div class="clearance-dots">
+                                    <span class="dot green" title="Library"></span>
+                                    <span class="dot green" title="Hostel"></span>
+                                    <span class="dot green" title="Dept"></span>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn-review-main" onclick="openReviewPanel('REQ001')">Review</button>
+                            </td>
+                        </tr>
+						<tr>
+                            <td>2020/MS/145</td>
+                            <td><b>Semester Result sheet</b></td>
+                            <td>2025-03-10</td>
+                            <td>
+                                <div class="clearance-dots">
+                                    <span class="dot green" title="Dept"></span>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn-review-main" onclick="openReviewPanel('REQ001')">Review</button>
+                            </td>
+                        </tr>
+						<tr>
+                            <td>2020/COM/245</td>
+                            <td><b>Degree Certificate</b></td>
+                            <td>2025-10-10</td>
+                            <td>
+                                <div class="clearance-dots">
+                                    <span class="dot green" title="Library"></span>
+                                    <span class="dot green" title="Hostel"></span>
+                                    <span class="dot green" title="Dept"></span>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn-review-main" onclick="openReviewPanel('REQ001')">Review</button>
+                            </td>
+                        </tr>
+						<tr>
+                            <td>2020/MS/345</td>
+                            <td><b>Degree Certificate</b></td>
+                            <td>2026-03-10</td>
+                            <td>
+                                <div class="clearance-dots">
+                                    <span class="dot green" title="Library"></span>
+                                    <span class="dot green" title="Hostel"></span>
+                                    <span class="dot green" title="Dept"></span>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn-review-main" onclick="openReviewPanel('REQ001')">Review</button>
+                            </td>
+                        </tr>
+						<tr>
+                            <td>2020/CS/45</td>
+                            <td><b>Semester Result sheet</b></td>
+                            <td>2026-03-10</td>
+                            <td>
+                                <div class="clearance-dots">
+                                    <span class="dot green" title="Dept"></span>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn-review-main" onclick="openReviewPanel('REQ001')">Review</button>
+                            </td>
+                        </tr>
+						<tr>
+                            <td>2020/MS/25</td>
+                            <td><b>Degree Certificate</b></td>
+                            <td>2026-03-10</td>
+                            <td>
+                                <div class="clearance-dots">
+                                    <span class="dot green" title="Library"></span>
+                                    <span class="dot green" title="Hostel"></span>
+                                    <span class="dot green" title="Dept"></span>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn-review-main" onclick="openReviewPanel('REQ001')">Review</button>
+                            </td>
+                        </tr>
+						<tr>
+                            <td>2020/ICT/45</td>
+                            <td><b>Degree Certificate</b></td>
+                            <td>2026-03-10</td>
+                            <td>
+                                <div class="clearance-dots">
+                                    <span class="dot green" title="Library"></span>
+                                    <span class="dot green" title="Hostel"></span>
+                                    <span class="dot green" title="Dept"></span>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn-review-main" onclick="openReviewPanel('REQ001')">Review</button>
+                            </td>
+                        </tr>
+						<tr>
+                            <td>2020/MS/54</td>
+                            <td><b>Degree Certificate</b></td>
+                            <td>2026-03-10</td>
+                            <td>
+                                <div class="clearance-dots">
+                                    <span class="dot green" title="Library"></span>
+                                    <span class="dot green" title="Hostel"></span>
+                                    <span class="dot green" title="Dept"></span>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn-review-main" onclick="openReviewPanel('REQ001')">Review</button>
+                            </td>
+                        </tr><tr>
+                            <td>2020/COM/154</td>
+                            <td><b>Semester Result sheet</b></td>
+                            <td>2026-03-10</td>
+                            <td>
+                                <div class="clearance-dots">
+                                    <span class="dot green" title="Dept"></span>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn-review-main" onclick="openReviewPanel('REQ001')">Review</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+	
+	<div id="forwarded-history-section" class="content-section" style="display: none;">
+    <header class="top-bar">
+        <div class="welcome">
+            <h1>Forwarded History</h1>
+            <p>Archive of student requests forwarded to Main Campus for Level 2 verification.</p>
+        </div>
+    </header>
+
+    <div class="table-controls">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="historySearch" placeholder="Search by Index No or Ref ID..." onkeyup="filterHistory()">
+        </div>
+        <div class="filter-actions">
+            <input type="date" id="historyDate">
+            <button class="btn-secondary"><i class="fas fa-download"></i> Export History</button>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table" id="historyTable">
+            <thead>
+                <tr>
+                    <th>Ref ID</th>
+                    <th>Index No</th>
+                    <th>Certificate Type</th>
+                    <th>Forwarded Date</th>
+                    <th>Current Progress</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#REF-9021</td>
+                    <td>2020/ICT/12</td>
+                    <td>Academic Transcript</td>
+                    <td>2026-03-05</td>
+                    <td><span class="c-badge done">Received by Main Campus</span></td>
+                    <td>
+                        <button class="btn-forward" onclick="viewHistoryDetails('9021')">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>#REF-8842</td>
+                    <td>2020/MS/45</td>
+                    <td>Degree Certificate</td>
+                    <td>2026-03-01</td>
+                    <td><span class="c-badge completed">Issued</span></td>
+                    <td>
+                        <button class="btn-forward" onclick="viewHistoryDetails('8842')">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+	<div id="chatbot-control-section" class="content-section" style="display: none;">
+    <header class="top-bar">
+        <div class="welcome">
+            <h1>AI Assistant Control</h1>
+            <p>Ask questions about student requests and get instant insights.</p>
+        </div>
+    </header>
+
+    <div class="chat-container">
+        <div class="chat-window" id="chatWindow">
+            <div class="msg bot-msg">
+                <i class="fas fa-robot"></i>
+                <span>Hello AR! I'm your AI Assistant. How can I help you today?</span>
+            </div>
+        </div>
+
+        <div class="chat-input-box">
+            <input type="text" id="aiQuery" placeholder="Ask something (e.g. 'How many students are pending from IS department?')...">
+            <button onclick="sendMessage()" class="btn-send">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+
+        <div class="quick-prompts">
+            <button onclick="quickAsk('How many new requests today?')">Today's Summary</button>
+            <button onclick="quickAsk('List students with pending hostel clearance')">Hostel Pending List</button>
+            <button onclick="quickAsk('Is there any issue with EUSL/TC/IS/2022/MS/08 documents?')">Check Reg. No. EUSL/TC/IS/2022/MS/08</button>
+            <button onclick="quickAsk('Show the history of requests I forwarded to Admin')">Forwarded to Admin History</button>
+        </div>
+    </div>
+</div>
+
+<div id="reports-section" class="content-section" style="display: none;">
+    <header class="top-bar">
+        <div class="welcome">
+            <h1>Analytics & Reports</h1>
+            <p>Visual representation of certificate request processing and performance.</p>
+        </div>
+        <button class="btn-primary" onclick="window.print()"><i class="fas fa-print"></i> Print Monthly Report</button>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    </header>
+
+    <div class="reports-grid">
+        <div class="report-card">
+            <h3>Request Status Distribution</h3>
+            <canvas id="statusChart"></canvas>
+        </div>
+
+        <div class="report-card">
+            <h3>Monthly Request Volume</h3>
+            <canvas id="trendChart"></canvas>
+        </div>
+
+        <div class="report-card">
+            <h3>Requests by Department</h3>
+            <canvas id="deptChart"></canvas>
+        </div>
+
+        <div class="report-card full-width">
+            <h3>Performance Summary</h3>
+            <div class="summary-stats">
+                <div class="stat-item">
+                    <span>Average Approval Time</span>
+                    <strong>2.4 Days</strong>
+                </div>
+                <div class="stat-item">
+                    <span>Peak Department</span>
+                    <strong>Management Studies</strong>
+                </div>
+                <div class="stat-item">
+                    <span>Completion Rate</span>
+                    <strong>88%</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main>
+<div id="arReviewModal" class="modal" style="display:none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6);">
+    <div class="modal-content" style="background: white; margin: 10% auto; padding: 25px; width: 400px; border-radius: 12px; position: relative;">
+        <span onclick="closeARModal()" style="position: absolute; right: 20px; top: 15px; cursor: pointer; font-size: 25px;">&times;</span>
+        
+        <h2 style="margin-bottom: 20px; color: #333;">Request Details</h2>
+        
+        <div id="arModalDetails" style="line-height: 2; font-size: 15px;">
+            </div>
+
+        <div style="margin-top: 25px; display: flex; gap: 10px;">
+            <button onclick="approveRequest()" style="background: #28a745; color: white; border: none; padding: 10px; border-radius: 5px; flex: 1; cursor: pointer;">Final Approve</button>
+            <button onclick="closeARModal()" style="background: #6c757d; color: white; border: none; padding: 10px; border-radius: 5px; flex: 1; cursor: pointer;">Close</button>
+        </div>
+    </div>
+</div>
+    <script src="ar-script.js"></script>
+</body>
+</html>

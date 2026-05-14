@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCEUSL - Digital Certificate Portal</title>
+    <link rel="stylesheet" href="login-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="branding-panel">
+            <div class="logo-section">
+                <a href="home.html" style="text-decoration: none; color: inherit;">
+                <div class="university-logo-box">
+                    <i class="fas fa-graduation-cap university-icon"></i>
+                </div>
+                </a>
+                <div>
+                    <h2>Trincomalee Campus, EUSL</h2>
+                    <h3>Sri Lanka</h3>
+                </div>
+            </div>
+            <div class="branding-content">
+                <h1>Digital Certificate Request & Tracking <span>System</span></h1>
+                <p>Empowering Education, Enabling Excellence. Access your academic portal securely.</p>
+            </div>
+            <div class="branding-footer">
+                <p>© 2026 TCEUSL - Trincomalee Campus, Eastern University, Sri Lanka. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-panel">
+            <div class="role-sidebar">
+                <div class="role-item active" data-role="Student">
+                    <i class="fas fa-user-graduate"></i>
+                    <span>Student</span>
+                </div>
+                <div class="role-item" data-role="Staff">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Staff</span>
+                </div>
+                <div class="role-item" data-role="Registrar">
+                    <i class="fas fa-id-card-clip"></i>
+                    <span>AR</span>
+                </div>
+                <div class="role-item" data-role="Admin">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Admin</span>
+                </div>
+            </div>
+
+            <div class="login-form-content">
+                <div class="form-header">
+                    <h2 id="form-title">Welcome Back</h2>
+                    <p class="subtitle" id="form-subtitle">Sign in to access your courses and results</p>
+                </div>
+                
+                <form id="login-form">
+                    <input type="hidden" id="selected-role" name="role" value="Student">
+
+                    <div class="input-group">
+                        <label for="username-field" id="user-label">User ID</label>
+                        <div class="input-with-icon">
+                            <i class="far fa-user" id="user-icon"></i>
+                            <input type="text" id="username-field" name="username" placeholder="e.g. 2020/MS/001" required>
+                        </div>
+                    </div>
+                    
+         <div class="input-group">
+                <label for="password">Password</label>
+    
+                <div class="input-with-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" name="password" placeholder="Enter Password" required>
+                    <i class="far fa-eye toggle-password" id="togglePassword"></i>
+                </div>
+
+         <div class="forgot-container">
+            <a href="#" class="forgot-link" onclick="openModal(event)">Forgot password?</a>
+         </div>
+
+    <div id="forgotModal" class="modal">
+      <div class="modal-content">
+         <span class="close-btn" onclick="closeModal()">&times;</span>
+        
+        <div id="step1">
+            <h2>Reset Password</h2>
+            <p style="color: #666; font-size: 0.9rem; margin-bottom: 20px;">
+                Please enter your registered <b>Email address</b>. <br>
+                We will send you a 6-digit <b>OTP</b> code.
+            </p>
+              <input type="email" id="resetEmail" placeholder="Enter your email" class="login-input">
+              <button id="sendOtpBtn" class="login-btn" onclick="handleSendOTP()">Send OTP</button>
+        </div>
+
+        <div id="step2" style="display:none;">
+            <h2>Verify OTP</h2>
+            <p style="color: #666; font-size: 0.9rem; margin-bottom: 20px;">
+                Enter the code sent to your email and your new password.
+            </p>
+            <input type="text" id="otpCode" placeholder="6-Digit OTP" class="login-input">
+            <input type="password" id="newPassword" placeholder="New Password" class="login-input">
+            <input type="password" id="confirmPassword" placeholder="Confirm New Password" class="login-input">
+            <button id="resetBtn" class="login-btn" onclick="handleResetPassword()">Reset Password</button>
+        </div>
+    </div>
+  </div>
+</div>
+               
+        <div class="remember-me">
+                <input type="checkbox" id="remember" name="remember">
+                <label for="remember">Remember me for 30 days</label>
+            </div>
+
+            <button type="submit" class="signin-btn">
+                Sign In <i class="fas fa-arrow-right"></i>
+            </button>
+                    
+                    <p class="help-text">Need help? <a href="#">Contact IT Support</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="login-script.js"></script>
+</body>
+</html>

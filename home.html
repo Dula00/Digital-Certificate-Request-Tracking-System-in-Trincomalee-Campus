@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EUSL | Digital Certificate Portal</title>
+    <link rel="stylesheet" href="home-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>TCEUSL <span>Portal</span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="javascript:void(0)" onclick="toggleChatWindow()">Chatbot</a></li>
+                
+            </ul>
+            <a href="login.html" class="btn-signin">Sign In</a>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1><span>Trincomalee Campus  </span><br> Digital</span> Certificate Request & <span class="eusl-yellow">Tracking System</span></h1>
+            <p>Request and track your academic certificates online with Ease. A faster, more reliable system for all Trincomalee Campus students.</p>
+            <div class="hero-btns">
+                <a href="login.html" class="btn-primary">Get Started <i class="fas fa-arrow-right"></i></a>
+                <a href="#how-it-works" class="btn-secondary">Learn More</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png" alt="Digital Portal">
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="section-title">
+            <h2>System Features</h2>
+            <p>Designed to Eliminate Administrative Bottlenecks and enhance transparency.</p>
+        </div>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <i class="fas fa-file-signature"></i>
+                <h3>Easy Submission</h3>
+                <p>Submit certificate requests digitally without visiting the campus office.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>Live Tracking</h3>
+                <p>Real-time visibility into your application's status at every stage.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-user-shield"></i>
+                <h3>Secure Storage</h3>
+                <p>Your academic records are encrypted and stored in a tamper-proof archive.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-robot"></i>
+                <h3>AI Assistant</h3>
+                <p>24/7 automated support to answer your clearance-related queries.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works" id="how-it-works">
+        <div class="section-title">
+            <h2>How It Works</h2>
+        </div>
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-num">1</div>
+                <h4>Register/Login</h4>
+                <p>Create an account using your Index Number & NIC.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <h4>Submit Request</h4>
+                <p>Select the document type and upload evidence.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <h4>Admin Verification</h4>
+                <p>Staff verifies and forwards to AR for approval.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <h4>Download</h4>
+                <p>Receive your digital certificate once approved.</p>
+            </div>
+        </div>
+    </section>
+
+<section id="faq" class="faq-section">
+    <div class="container">
+
+    <div class="faq-left-col">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Find quick answers to common questions about the TCEUSL portal.</p>
+    </div>
+
+        <div class="faq-container">
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    How do I request a degree certificate?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Log in to your student dashboard, navigate to the 'Request Certificate' section, fill in the required details, and upload the necessary documents.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    How long does it take to process a request?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Standard processing takes 5-7 working days. Urgent requests can be processed within 2-3 working days, subject to university approval.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    Can I track my application status?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes, go to the 'Certificate Status Tracking' page and enter your Request ID or Student ID to see the real-time status of your application.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    What should I do if my request is rejected?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>If rejected, you will receive a notification with the reason. Please correct the issues (e.g., re-upload clear documents) and submit a new request.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <footer id="about">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Trincomalee Campus</h4>
+                <p>Eastern University, Sri Lanka</p>
+                <p>Konesapuri, Nilaveli.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="#">Help Center</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+             <ul>
+                    <li class="footer-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>support@eusl.lk</span>
+                    </li>
+                    <li class="footer-contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>+94 26 222 1234</span>
+                    </li>
+                    <li class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Nilaveli, Trincomalee</span>
+                    </li>
+             </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 TCEUSL Digital Transformation Project. All rights reserved.</p>
+        </div>
+    </footer>
+
+<div id="chatbot-bubble" onclick="toggleChatWindow()">
+    <i class="fas fa-comments"></i>
+</div>
+
+<div id="chatbot-window" style="display: none;">
+    <div class="chat-header">
+        <div class="chat-header-info">
+            <i class="fas fa-robot"></i>
+            <div>
+                <h4>TCEUSL Helper</h4>
+                <span>Online (24/7)</span>
+            </div>
+        </div>
+        <button onclick="toggleChatWindow()" class="close-btn">&times;</button>
+    </div>
+
+    <div class="chat-body" id="chat-body">
+        <div class="message bot-message">
+            Hi there! 👋 Welcome to TCEUSL Portal. How can I help you today?
+        </div>
+        
+        <div class="quick-options">
+            <button onclick="handleQuickClick('How to request a certificate?')">📄 Request Certificate</button>
+            <button onclick="handleQuickClick('How to track my application?')">🔍 Track Status</button>
+            <button onclick="handleQuickClick('I forgot my password')">🔑 Forgot Password</button>
+        </div>
+    </div>
+
+    <div class="chat-footer">
+        <input type="text" id="chat-input" placeholder="Type a message...">
+        <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+    </div>
+</div>
+
+    <script src="home-script.js"></script>
+</body>
+</html>

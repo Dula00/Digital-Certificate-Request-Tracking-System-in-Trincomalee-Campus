@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Degree Certificate - EUSL</title>
+    <link rel="stylesheet" href="certificate-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+
+    <div class="no-print">
+        <button class="download-btn" onclick="generatePDF()">Download Certificate as PDF</button>
+        <p>Tip: Use "Preview" to check details before downloading.</p>
+    </div>
+
+    <div id="certificate-wrapper">
+        <div class="certificate-paper">
+            <div class="cert-inner-border">
+                
+                <div class="cert-header">
+                    <h1>EASTERN UNIVERSITY, SRI LANKA</h1>
+                    <h2>TRINCOMALEE CAMPUS</h2>
+                </div>
+                
+                <div class="logo-section">
+                    <img src="eusllogo.png" alt="University Logo">
+                </div>
+
+                <div class="cert-body">
+                    <p class="italic-text">This is to certify that</p>
+                    <h2 id="displayStudentName">KAMAL GUNAWARDENA</h2>
+                    <p class="main-text">
+                        having successfully completed the prescribed<br>
+                        Courses of Study and the Examinations<br>
+                        of this University<br>
+                        was admitted to the Degree of
+                    </p>
+                    <h3 class="degree-name">BACHELOR OF SCIENCE INFORMATION SYSTEM</h3>
+                    <p class="date-text">on 10th March 2026</p>
+                </div>
+
+                <div class="cert-footer">
+                    <div class="seal-container">
+                        <div class="official-seal">EUSL<br>OFFICIAL</div>
+                    </div>
+                    
+                    <div class="signature-section">
+                        <div class="sig-box">
+                            <div class="sig-img vc-sig"></div>
+                            <p>Vice-Chancellor</p>
+                        </div>
+                        <div class="sig-box">
+                            <div class="sig-img reg-sig"></div>
+                            <p>Registrar</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // URL එකෙන් ශිෂ්‍යයාගේ නම කියවා පෙන්වීම
+        const urlParams = new URLSearchParams(window.location.search);
+        const studentName = urlParams.get('name');
+        if (studentName) {
+            document.getElementById('displayStudentName').innerText = studentName.toUpperCase();
+        }
+
+        // PDF එකක් විදිහට Save කරන Function එක
+        function generatePDF() {
+            const element = document.getElementById('certificate-wrapper');
+            const options = {
+                margin: 0,
+                filename: 'Degree_Certificate_EUSL.pdf',
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(options).from(element).save();
+        }
+    </script>
+</body>
+</html>

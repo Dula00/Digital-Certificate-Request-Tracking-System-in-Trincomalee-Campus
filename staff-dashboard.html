@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCEUSL - Trincomalee Campus Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="staff-style.css">
+</head>
+<body>
+
+
+<div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="login.html" style="text-decoration: none;">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                </a>
+
+                <div class="logo-text">
+                    <h2>TCEUSL</h2>
+                    <p>Staff Portal</p>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="javascript:void(0)" class="nav-item active" onclick="showSection('dashboard', this)">
+                  <i class="fas fa-th-large"></i> Staff Dashboard</a>
+				
+                <a href="javascript:void(0)" class="nav-item" onclick="showSection('request', this)">
+                   <i class="fas fa-clock"></i> Pending Requests</a>
+				
+				
+                <a href="javascript:void(0)" class="nav-item" onclick="showSection('my-requests', this)">
+                  <i class="fas fa-folder-open"></i>Issued Certificates </a>
+				
+				
+                <a href="javascript:void(0)" class="nav-item" onclick="showSection('tracking', this)">
+                  <i class="fas fa-search-location"></i>  Student Registry </a>
+				  
+                <a href="javascript:void(0)" class="nav-item" onclick="showSection('profile', this)">
+                   <i class="fas fa-user-cog"></i>  System Settings</a>
+		 </nav>
+
+            <a href="javascript:void(0)" class="nav-item logout-btn" onclick="logoutUser()">
+               <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+			
+        </aside>
+
+    <main class="main-content">
+	    <div id="dashboard-section" class="content-section active-section">
+          <header class="top-bar">
+            <div class="welcome">
+                <h1>Staff Administration Portal</h1>
+                <p>Monitor and process student certificate requests efficiently.</p>
+            </div>  
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon orange"><i class="fas fa-clock"></i></div>
+                <div class="stat-details">
+                    <h3>Pending</h3>
+                    <p>12</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green"><i class="fas fa-check-double"></i></div>
+                <div class="stat-details">
+                    <h3>Approved Today</h3>
+                    <p>08</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon blue"><i class="fas fa-file-alt"></i></div>
+                <div class="stat-details">
+                    <h3>Total Requests</h3>
+                    <p>154</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="table-container">
+            <div class="table-header">
+                <h3>Recent Certificate Requests</h3>
+                <button class="btn-view-all">View All</button>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>ID Number</th>
+                        <th>Certificate Type</th>
+                        <th>Date Requested</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>L.G.D.Nilushika</td>
+                        <td>EU/TR/2020/MS/01</td>
+                        <td>Degree certificate</td>
+                        <td>Mar 08, 2026</td>
+                        <td><span class="status-pill pending">Pending</span></td>
+                        <td><button class="btn-review">Review</button></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>K.L.Tharu</td>
+                        <td>EU/TR/2020/MS/106</td>
+                        <td>Degree certificate</td>
+                        <td>Mar 08, 2026</td>
+                        <td><span class="status-pill pending">Approved</span></td>
+                        <td><button class="btn-review">Review</button></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>M.K.Madu</td>
+                        <td>EU/TR/2020/MS/50</td>
+                        <td>Semester Result sheets</td>
+                        <td>Mar 08, 2025</td>
+                        <td><span class="status-pill pending">Pending</span></td>
+                        <td><button class="btn-review">Review</button></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>K.D.Manilka</td>
+                        <td>EU/TR/2020/MS/52</td>
+                        <td>Degree certificate</td>
+                        <td>Mar 08, 2026</td>
+                        <td><span class="status-pill pending">Pending</span></td>
+                        <td><button class="btn-review">Review</button></td>
+                    </tr>
+                    </tbody>
+            </table>
+        </section>
+	</div>
+		
+<div id="request" class="content-section">
+    <div class="top-header">
+        <div class="header-left">
+            <h1>Pending Certificate Requests</h1>
+            <p id="request-count">Total Pending: 0</p>
+        </div>
+        <div class="header-right">
+            <div class="search-input">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search by Student ID or Name..." onkeyup="filterTable(this)">
+            </div>
+        </div>
+    </div>
+   
+    <h3 class="section-title"><i class="fas fa-file-alt"></i> 1. Semester Result Sheet Requests</h3>
+    <div class="card table-card" style="margin-bottom: 30px;">
+        <div class="table-responsive">
+            <table class="full-width-table">
+                <thead>
+                    <tr>
+                        <th>Student Name & ID</th>
+                        <th>Index Number</th>
+                        <th>Semester/Year</th>
+                        <th>Date Requested</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="semester-pending-body">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <h3 class="section-title"><i class="fas fa-user-graduate"></i> 2. Degree Certificate Requests</h3>
+    <div class="card table-card">
+        <div class="table-responsive">
+            <table class="full-width-table">
+                <thead>
+                    <tr>
+                        <th>Student Name & ID</th>
+                        <th>Index Number</th>
+                        <th>Library</th>
+                        <th>Hostel</th>
+                        <th>Fees</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="degree-pending-body">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+   <div id="semesterModal" class="modal">
+    <div class="modal-content">
+        
+        <h2 style="color: #2563eb; margin-bottom: 10px;">
+            <span><i class="fas fa-file-check"></i> Review Semester Request</span>
+            <span class="close" onclick="closeSemesterModal()">&times;</span>
+        </h2>
+        <hr style="border: 0.5px solid #e2e8f0;">
+        
+        <div id="semesterDetails" style="margin-top: 20px;"></div>
+
+        <div class="approval-flow-section" style="margin-top: 20px; border-top: 1px dashed #ccc; padding-top: 15px;">
+            <label style="font-weight: 600; color: #1e293b; margin-bottom: 10px; display: block;">Approval Progress Tracking</label>
+            <table class="approval-table" style="width: 100%; border-collapse: collapse; background: #f8fafc; border-radius: 8px; overflow: hidden;">
+                <thead>
+                    <tr style="background: #e2e8f0; text-align: left;">
+                        <th style="padding: 10px;">Authority</th>
+                        <th style="padding: 10px;">Status</th>
+                        <th style="padding: 10px;">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="approvalTableBody">
+                    <tr><td>Office Staff</td><td><span class="status-pill pending" id="staff-status">Pending</span></td><td><button onclick="verifyLevel('staff')">Verify</button></td></tr>
+                    <tr><td>HOD Approval</td><td><span class="status-pill pending" id="hod-status">Pending</span></td><td><button onclick="verifyLevel('hod')">Verify</button></td></tr>
+                    <tr><td>Dean Approval</td><td><span class="status-pill pending" id="dean-status">Pending</span></td><td><button onclick="verifyLevel('dean')">Verify</button></td></tr>
+                    <tr><td>Rector Approval</td><td><span class="status-pill pending" id="rector-status">Pending</span></td><td><button onclick="verifyLevel('rector')">Verify</button></td></tr>               
+                </tbody>
+            </table>
+        </div>
+
+        <div class="modal-actions" style="margin-top: 20px;">
+            <button id="forwardARBtn" class="approve-btn" onclick="forwardToAR()" disabled>
+            <i class="fas fa-paper-plane"></i> FORWARD AR
+           </button>
+            <button class="reject-btn" onclick="updateSemesterStatus('Rejected')">
+                <i class="fas fa-times-circle"></i> Reject
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="degreeModal" class="modal">
+    <div class="modal-content">
+                <h2 style="color: #2563eb; margin-bottom: 10px;">
+            <span><i class="fas fa-file-check"></i> Review Degree Certificate Request</span>
+            <span class="close" onclick="closeModal()">&times;</span>
+        </h2>
+        <hr style="border: 0.5px solid #e2e8f0;">
+        
+        <div id="degreeDetails" style="margin-top: 20px;"></div>
+
+        <div class="approval-flow-section" style="margin-top: 20px; border-top: 1px dashed #ccc; padding-top: 15px;">
+            <label style="font-weight: 600; color: #1e293b; margin-bottom: 10px; display: block;">Approval Progress Tracking</label>
+            <table class="approval-table" style="width: 100%; border-collapse: collapse; background: #f8fafc; border-radius: 8px; overflow: hidden;">
+                <thead>
+                    <tr style="background: #e2e8f0; text-align: left;">
+                        <th style="padding: 10px;">Authority</th>
+                        <th style="padding: 10px;">Status</th>
+                        <th style="padding: 10px;">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="approvalTableBody">
+                    <tr><td>Sub Warden (Hostel Fees)</td><td><span class="status-pill pending" id="subwarden-status">Pending</span></td><td><button onclick="verifyLevel('subwarden')">Verify PIV</button></td></tr>
+                    <tr><td>Warden Approval</td><td><span class="status-pill pending" id="warden-status">Pending</span></td><td><button onclick="verifyLevel('warden')">Approve</button></td></tr>
+                    <tr><td>Library Complex</td><td><span class="status-pill pending" id="library-status">Pending</span></td><td><button onclick="verifyLevel('library')">Check Books</button></td></tr>
+                    <tr><td>Student Affairs Office</td><td><span class="status-pill pending" id="student-affairs-status">Pending</span></td><td><button onclick="verifyLevel('student-affairs')">Final Check</button></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="modal-actions" style="margin-top: 20px;">
+            <button id="forwardARBtn_Degree" class="approve-btn" onclick="forwardToAR()" disabled>
+            <i class="fas fa-paper-plane"></i> FORWARD TO AR
+           </button>
+            <button class="reject-btn" onclick="closeModal()">
+                <i class="fas fa-times-circle"></i> Close
+            </button>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+<div id="my-requests" class="content-section">
+    <div class="top-header">
+        <div class="header-left">
+            <h1>Issued Certificates</h1>
+            <p>History of all certificates processed and issued to students.</p>
+        </div>
+        <div class="header-right">
+            <button class="btn-review" style="background-color: #059669;">
+                <i class="fas fa-file-export"></i> Export Report
+            </button>
+        </div>
+    </div>
+
+    <div class="card table-card">
+        <div class="table-responsive">
+            <table class="full-width-table">
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>ID Number</th>
+                        <th>Certificate Type</th>
+                        <th>Issued Date</th>
+                        <th>Reference No</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>S. Perera</strong></td>
+                        <td>EU/TR/2019/MS/45</td>
+                        <td>Degree Certificate</td>
+                        <td>Jan 15, 2026</td>
+                        <td>#CERT-8821</td>
+                        <td><span class="status-pill approved">Issued</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>R.M. Bandara</strong></td>
+                        <td>EU/TR/2019/BC/12</td>
+                        <td>Semester Results</td>
+                        <td>Feb 02, 2026</td>
+                        <td>#CERT-9045</td>
+                        <td><span class="status-pill approved">Issued</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div id="tracking" class="content-section">
+    <div class="top-header">
+        <div class="header-left">
+            <h1>Student Registry</h1>
+            <p>View and manage all registered students in the Trincomalee Campus.</p>
+        </div>
+        <div class="header-right">
+            <div class="search-input">
+                <i class="fas fa-filter"></i>
+                <select class="faculty-filter" title="Filter by faculty">
+                    <option>All Faculties</option>
+                    <option>Faculty of Applied Science</option>
+                    <option>Faculty of Communication & Business Studies</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="card table-card">
+        <div class="table-responsive">
+            <table class="full-width-table">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Registration No</th>
+                        <th>Faculty / Department</th>
+                        <th>Email Address</th>
+                        <th>Batch</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div style="display:flex; align-items:center; gap:12px;">
+                                <div style="width:35px; height:35px; border-radius:50%; background:#e2e8f0; display:flex; align-items:center; justify-content:center; color:var(--blue-primary);">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <strong>L.G.D. Nilushika</strong>
+                            </div>
+                        </td>
+                        <td>EU/TR/2020/MS/01</td>
+                        <td>Business Studies</td>
+                        <td>nilushika@eusl.lk</td>
+                        <td>2019/2020</td>
+                        <td><button class="btn-outline action-btn" style="padding: 6px 12px; font-size: 11px; border:1px solid var(--border-color);"><i class="fas fa-id-card"></i> Profile</button></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display:flex; align-items:center; gap:12px;">
+                                <div style="width:35px; height:35px; border-radius:50%; background:#e2e8f0; display:flex; align-items:center; justify-content:center; color:var(--blue-primary);">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <strong>K.L. Tharu</strong>
+                            </div>
+                        </td>
+                        <td>EU/TR/2020/MS/106</td>
+                        <td>Business Studies</td>
+                        <td>tharu.kl@eusl.lk</td>
+                        <td>2019/2020</td>
+                        <td><button class="btn-outline action-btn" style="padding: 6px 12px; font-size: 11px; border:1px solid var(--border-color);"><i class="fas fa-id-card"></i> Profile</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="profile" class="content-section">
+    <div class="top-header">
+        <div class="header-left">
+            <h1>System Settings</h1>
+            <p>Manage your account preferences and portal configuration.</p>
+        </div>
+    </div>
+
+    <div class="settings-grid">
+        <div class="card settings-card">
+            <h3><i class="fas fa-user-circle"></i> Profile Settings</h3>
+            <div class="settings-form">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" value="Staff Member Name" placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" value="staff@eusl.lk" placeholder="Enter email address">
+                </div>
+                <button class="btn-primary-pro">Update Profile</button>
+            </div>
+        </div>
+
+        <div class="card settings-card">
+            <h3><i class="fas fa-cog"></i> Portal Configuration</h3>
+            <div class="settings-form">
+                <div class="form-group">
+                    <label>Current Academic Year</label>
+                    <select title="Select current academic year">
+                        <option>2023/2024</option>
+                        <option selected>2024/2025</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Notification Alerts</label>
+                    <div class="notification-group">
+                        <input type="checkbox" id="emailNotifications" checked title="Enable email notifications for new requests"> <label for="emailNotifications">Receive email on new requests</label>
+                    </div>
+                </div>
+                <button class="btn-primary-pro">Save System Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</main>
+<div id="reviewModal" class="modal-overlay">
+    <div class="modal-content professional-theme">
+        <div class="modal-header">
+            <div class="header-title">
+                <i class="fas fa-file-signature"></i>
+                <span>Review Certificate Request</span>
+            </div>
+            <button class="close-x" onclick="closeModal()">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+            <div class="student-header-card">
+                <div class="profile-avatar">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <div class="profile-info">
+                    <h2 id="modalStudentName">M.K. Madu</h2>
+                    <span class="student-id" id="modalStudentID">EU/TR/2020/MS/50</span>
+                </div>
+                <div class="request-badge">Pending Review</div>
+            </div>
+
+            <div class="section-label">Institutional Clearance Status</div>
+            <div class="clearance-grid">
+                <div class="clearance-box success">
+                    <i class="fas fa-hotel"></i>
+                    <div class="cb-details">
+                        <label>Hostel</label>
+                        <span>Cleared</span>
+                    </div>
+                </div>
+                <div class="clearance-box success">
+                    <i class="fas fa-book"></i>
+                    <div class="cb-details">
+                        <label>Library</label>
+                        <span>Cleared</span>
+                    </div>
+                </div>
+                <div class="clearance-box success">
+                    <i class="fas fa-university"></i>
+                    <div class="cb-details">
+                        <label>Faculty</label>
+                        <span>Cleared</span>
+                    </div>
+                </div>
+                <div class="clearance-box warning">
+                    <i class="fas fa-receipt"></i>
+                    <div class="cb-details">
+                        <label>Payment</label>
+                        <span>Verified</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="details-list">
+                <div class="detail-item">
+                    <span class="label">Certificate Type:</span>
+                    <span class="value" id="modalCertType">Character Certificate</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Requested Date:</span>
+                    <span class="value" id="modalDate">Mar 08, 2026</span>
+                </div>
+            </div>
+
+            <div class="remarks-section">
+                <label>Staff Remarks (Internal)</label>
+                <textarea placeholder="e.g., Checked all records. Ready to issue."></textarea>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn-secondary" onclick="closeModal()">Close</button>
+            <button class="btn-danger-outline" onclick="handleAction('Rejected')">Reject</button>
+            <button class="btn-primary-pro" onclick="handleAction('Approved')">Approve & Issue</button>
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="staff-script.js"></script>
+</body>
+</html>

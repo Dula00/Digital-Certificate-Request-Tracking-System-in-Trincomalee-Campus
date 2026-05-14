@@ -1,0 +1,168 @@
+body {
+    background: #525659;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 0;
+    margin: 0;
+}
+
+/* මුද්‍රණය නොවන කොටස් (Buttons) */
+.no-print {
+    margin-bottom: 20px;
+    text-align: center;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.download-btn {
+    padding: 12px 25px;
+    background: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.download-btn:hover {
+    background: #2ecc71;
+}
+
+/* සහතිකයේ ප්‍රධාන පත්‍රය */
+.certificate-paper {
+    width: 210mm; /* A4 size */
+    height: 297mm;
+    background: #fffdf5;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    border: 15px solid #b8860b; /* Gold border */
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+}
+
+.cert-inner-border {
+    border: 2px solid #b8860b;
+    height: 100%;
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* Header & Typography */
+.cert-header h1 {
+    font-family: 'Times New Roman', serif;
+    font-size: 32px;
+    color: #2c3e50;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.cert-header h2 {
+    font-family: 'Times New Roman', serif;
+    font-size: 20px;
+    letter-spacing: 4px;
+    color: #555;
+    margin-top: 10px;
+}
+
+.logo-section img {
+    width: 130px;
+    margin: 40px 0;
+}
+
+.italic-text {
+    font-style: italic;
+    font-size: 22px;
+    color: #555;
+}
+
+#displayStudentName {
+    font-family: 'Dancing Script', cursive;
+    font-size: 50px;
+    color: #1a365d;
+    margin: 25px 0;
+}
+
+.main-text {
+    font-family: 'Times New Roman', serif;
+    font-size: 18px;
+    line-height: 1.8;
+    color: #333;
+}
+
+.degree-name {
+    font-family: 'Times New Roman', serif;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 30px 0;
+    text-transform: uppercase;
+}
+
+.date-text {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+/* Footer & Signatures */
+.cert-footer {
+    margin-top: auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 20px 40px 20px;
+}
+
+.official-seal {
+    width: 110px;
+    height: 110px;
+    border: 4px dashed #900;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #900;
+    font-weight: bold;
+    font-size: 14px;
+    transform: rotate(-15deg);
+    background: rgba(180, 0, 0, 0.05);
+}
+
+.signature-section {
+    display: flex;
+    gap: 60px;
+}
+
+.sig-box {
+    text-align: center;
+    width: 150px;
+}
+
+.sig-img {
+    height: 60px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.vc-sig {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/7/7d/Signature_of_John_Hancock.png');
+}
+
+.reg-sig {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/b/be/Signature_of_George_Washington.png');
+}
+
+.sig-box p {
+    margin: 5px 0 0 0;
+    font-size: 14px;
+    border-top: 1px solid #333;
+    padding-top: 5px;
+    font-family: 'Times New Roman', serif;
+}
