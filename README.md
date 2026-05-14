@@ -3,6 +3,8 @@
 ## 📌 Project Description
 This project is a web-based system developed to manage and track digital certificate requests in the Trincomalee Campus.
 
+![Project Screenshot](image_be4382.jpg)
+
 ## 🛠️ Technologies Used
 - HTML
 - CSS
